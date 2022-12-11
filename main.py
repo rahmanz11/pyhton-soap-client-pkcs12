@@ -13,60 +13,39 @@ from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat
 from cryptography.hazmat.backends import default_backend
 from zeep.wsse import utils
 from datetime import datetime, timedelta
+from zeep.wsse.utils import WSU
+from zeep.wsse.signature import BinarySignature
 
 wsdl_url = 'https://miportafoliouat.transunion.co/InformacionComercialWS/services/InformacionComercial?wsdl'
 user = "520825"
 password = "COHd6zaIf*08"
 
-pfx_cert = 'D:\\utilities\\caoh91\\Certificados\\certificate.pfx'
+pfx_cert = 'certificate.pfx'
 pfx_password = "namtrik".encode('utf8')# b'namtrik'
 
-class BinarySignatureTimestamp(object):
-    """Sign given SOAP envelope with WSSE sig using given key and cert."""
-    def __init__(self, wsse_list):
-        self.wsse_list = wsse_list
-
+class BinarySignatureTimestamp(BinarySignature):
+    
     def apply(self, envelope, headers):
-    #     for wsse in self.wsse_list:
-    #         envelope, headers = wsse.apply(envelope, headers)
-    #     return envelope, headers
+
         security = utils.get_security_header(envelope)
-
-        created = datetime.now()
-        expired = created + timedelta(seconds=5 * 60)
-
-        token = utils.WSSE.UsernameToken()
-        token.extend([
-            utils.WSSE.Nonce('43d74dda16a061874d9ff27f2b40e017'),
-            utils.WSSE.Created(utils.get_timestamp(created)),
-        ])
-
-        timestamp = utils.WSU('Timestamp')
-        timestamp.append(utils.WSU('Created', utils.get_timestamp(created)))
-        timestamp.append(utils.WSU('Expires', utils.get_timestamp(expired)))
-
-        security.append(timestamp)
-
-        #  
-        # headers['Content-Type'] = 'application/soap+xml;charset=UTF-8'
-
-        # security = utils.get_security_header(envelope)
-
-        # created = datetime.utcnow()
-        # expired = created + timedelta(seconds=1 * 60)
-
-        # timestamp = utils.WSU('Timestamp')
-        # timestamp.append(utils.WSU('Created', created.replace(microsecond=0).isoformat()+'Z'))
-        # timestamp.append(utils.WSU('Expires', expired.replace(microsecond=0).isoformat()+'Z'))
-
-        # security.append(timestamp)
-
-        # super().apply(envelope, headers)
-        return envelope, headers
         
-    # Override response verification and skip response verification for now...
-    # Zeep does not supprt Signature verification with different certificate...
-    # Ref. https://github.com/mvantellingen/python-zeep/pull/822/  "Add support for different signing and verification certificates #822"
+        created = datetime.utcnow()
+        expired = created + timedelta(seconds=180 * 60)
+
+        timestamp_token = WSU.Timestamp()
+
+        timestamp_elements = [
+            WSU.Created(created.strftime("%Y-%m-%dT%H:%M:%SZ")), 
+            WSU.Expires(expired.strftime("%Y-%m-%dT%H:%M:%SZ"))
+            ]
+        
+        timestamp_token.extend(timestamp_elements)
+        
+        security.append(timestamp_token)
+
+        super().apply(envelope, headers)
+        return envelope, headers
+
     def verify(self, envelope):
         pass
 
@@ -78,9 +57,6 @@ with open(pfx_cert, "rb") as f:
 
     session = Session()
 
-    # cert_bytes = certificate.public_bytes(Encoding.DER)
-    # pk_bytes = private_key.private_bytes(Encoding.DER, PrivateFormat.TraditionalOpenSSL, NoEncryption())
-    
     pk = "certs/private.pem"
     cert = "certs/public.pem"
     try:
@@ -100,15 +76,17 @@ with open(pfx_cert, "rb") as f:
     session.auth = HTTPBasicAuth(user, password)
     transport = Transport(session=session)
     history = HistoryPlugin()
-    client = Client(wsdl_url, transport=transport, wsse=BinarySignatureTimestamp([signature]), plugins=[history])
+    
+    client = Client(wsdl_url, transport=transport, wsse=BinarySignatureTimestamp(pk, cert, str(pfx_password)), plugins=[history])
     client.settings.raw_response = True
 
+    client.set_ns_prefix(None, "http://infocomercial.cifin.asobancaria.com")
+    
     request_data = {
         'codigoInformacion': '1855',
         'motivoConsulta': '24',
         'numeroIdentificacion': '37685317',
-        'tipoIdentificacion': '1',
-        'primerApellido': None
+        'tipoIdentificacion': '1'
     }
 
     request_parameter = {
@@ -117,6 +95,8 @@ with open(pfx_cert, "rb") as f:
 
     try:
         response = client.service.consultaXml(**request_parameter)
+        for hist in [history.last_sent, history.last_received]:
+            print(etree.tostring(hist["envelope"], encoding="unicode", pretty_print=True))
         root = ET.fromstring(response.text)
         error_text = next(root.iter("faultstring")).text
     except Exception as e:
@@ -124,6 +104,3 @@ with open(pfx_cert, "rb") as f:
 
     if error_text:
         raise Fault(error_text)
-    
-    for hist in [history.last_sent, history.last_received]:
-        print(etree.tostring(hist["envelope"], encoding="unicode", pretty_print=True))
