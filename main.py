@@ -1,29 +1,28 @@
 import os
 from requests.auth import HTTPBasicAuth
 from requests import Session
-from zeep import Client
+from zeep import xsd, Client, Settings
 from zeep.transports import Transport
 from zeep.wsse.signature import Signature
 from zeep.plugins import HistoryPlugin
 from lxml import etree
-import xml.etree.ElementTree as ET
-from zeep.exceptions import Fault
 from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, NoEncryption
 from cryptography.hazmat.backends import default_backend
 from zeep.wsse import utils
 from datetime import datetime, timedelta
 from zeep.wsse.utils import WSU
-from zeep.wsse.signature import BinarySignature
+from zeep.wsse.signature import Signature
+import shutil
 
-wsdl_url = 'https://miportafoliouat.transunion.co/InformacionComercialWS/services/InformacionComercial?wsdl'
+wsdl_url = 'InformacionComercialWS.wsdl' #https://miportafoliouat.transunion.co/InformacionComercialWS/services/InformacionComercial?wsdl
 user = "520825"
 password = "COHd6zaIf*08"
 
 pfx_cert = 'certificate.pfx'
-pfx_password = "namtrik".encode('utf8')# b'namtrik'
+pfx_password = 'namtrik'
 
-class BinarySignatureTimestamp(BinarySignature):
+class SignatureTimestamp(Signature):
     
     def apply(self, envelope, headers):
 
@@ -49,13 +48,13 @@ class BinarySignatureTimestamp(BinarySignature):
     def verify(self, envelope):
         pass
 
-
 with open(pfx_cert, "rb") as f:
-    private_key, certificate = pkcs12.load_key_and_certificates(f.read(), pfx_password, default_backend())[:2]
+    private_key, certificate = pkcs12.load_key_and_certificates(f.read(), pfx_password.encode('utf8'), default_backend())[:2]
     
-    print(certificate.not_valid_after)
-
     session = Session()
+    session.auth = HTTPBasicAuth(user, password)
+    transport = Transport(session=session)
+    history = HistoryPlugin()
 
     pk = "certs/private.pem"
     cert = "certs/public.pem"
@@ -65,25 +64,44 @@ with open(pfx_cert, "rb") as f:
         pass
     with open(cert, "wb") as f:
         f.write(certificate.public_bytes(encoding=Encoding.PEM))
+        f.close()
 
     with open(pk, "wb") as f:
         f.write(private_key.private_bytes(encoding=Encoding.PEM,
                                           format=PrivateFormat.TraditionalOpenSSL,
                                           encryption_algorithm=NoEncryption()))
-                                          
-    signature = Signature(pk, cert)
+        f.close()
 
-    session.auth = HTTPBasicAuth(user, password)
-    transport = Transport(session=session)
-    history = HistoryPlugin()
-    
-    client = Client(wsdl_url, transport=transport, wsse=BinarySignatureTimestamp(pk, cert, str(pfx_password)), plugins=[history])
-    client.settings.raw_response = True
+    signature = SignatureTimestamp(pk, cert, pfx_password)
+    settings = Settings(strict=False, xml_huge_tree=True)
+    client = Client(wsdl_url, transport=transport, wsse=signature, plugins=[history], settings=settings)    
+    client.set_ns_prefix("inf", "http://infocomercial.cifin.asobancaria.com")
+    client.set_ns_prefix("dto", "http://dto.infocomercial.cifin.asobancaria.com")
+    client.set_ns_prefix("xsd", "http://www.w3.org/2001/XMLSchema")
+    client.set_ns_prefix("xsi", "http://www.w3.org/2001/XMLSchema-instance")
+    client.set_ns_prefix('soapenc', 'http://schemas.xmlsoap.org/soap/encoding/')
 
-    client.set_ns_prefix(None, "http://infocomercial.cifin.asobancaria.com")
+    # outer_type = client.get_type('dto:ParametrosConsultaDTO')
+    # outer_wrap = xsd.Element('parametrosConsulta', outer_type)
+        
+    # inner_type = client.get_type('soapenc:string')
+
+    # codigoInformacion_wrap = xsd.Element('codigoInformacion', inner_type)
+    # codigoInformacion_value = codigoInformacion_wrap('1855')
     
+    # motivoConsulta_wrap = xsd.Element('motivoConsulta', inner_type)
+    # motivoConsulta_value = motivoConsulta_wrap('24')
+
+    # numeroIdentificacion_wrap = xsd.Element('numeroIdentificacion', inner_type)
+    # numeroIdentificacion_value = numeroIdentificacion_wrap('37685317')
+
+    # outer_value = outer_wrap(codigoInformacion_value, motivoConsulta_value, numeroIdentificacion_value)
+
+    str_element = client.get_element("soapenc:string")
+    codigoInformacion = xsd.AnyObject(str_element, "1855")
+
     request_data = {
-        'codigoInformacion': '1855',
+        'codigoInformacion': codigoInformacion.value,
         'motivoConsulta': '24',
         'numeroIdentificacion': '37685317',
         'tipoIdentificacion': '1'
@@ -93,14 +111,9 @@ with open(pfx_cert, "rb") as f:
         'parametrosConsulta': request_data
     }
 
-    try:
+    with client.settings(raw_response=True): 
         response = client.service.consultaXml(**request_parameter)
-        for hist in [history.last_sent, history.last_received]:
-            print(etree.tostring(hist["envelope"], encoding="unicode", pretty_print=True))
-        root = ET.fromstring(response.text)
-        error_text = next(root.iter("faultstring")).text
-    except Exception as e:
-        error_text = str(e)
+    print (response.text)
 
-    if error_text:
-        raise Fault(error_text)
+    for hist in [history.last_sent, history.last_received]:
+        print(etree.tostring(hist["envelope"], encoding="unicode", pretty_print=True))

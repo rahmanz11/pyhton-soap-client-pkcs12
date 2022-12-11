@@ -1,40 +1,43 @@
-<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://infocomercial.cifin.asobancaria.com">
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inf="http://infocomercial.cifin.asobancaria.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dto="http://dto.infocomercial.cifin.asobancaria.com" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
   <soap-env:Header>
     <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
       <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
 <SignedInfo>
 <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-<Reference URI="#id-154efc16-b13f-4fa1-9597-f10dfed651cd">
+<Reference URI="#id-4db28775-f20a-4e2b-82f0-55d8d40ee1f7">
 <Transforms>
 <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 </Transforms>
 <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<DigestValue>jv+Qvajf+5KekaByzPto3Y8yy9k=</DigestValue>
+<DigestValue>VEvU/vx8jSOwqrm7NdMX5tsZw0Y=</DigestValue>
 </Reference>
-<Reference URI="#id-827a9ca0-0ecd-4961-9b6f-39b90195eff1">
+<Reference URI="#id-713e3f14-7b62-451f-8cc8-3798a81d8553">
 <Transforms>
 <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 </Transforms>
 <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<DigestValue>NJS1xFvJrPZerYbRTNl4+H8kOrI=</DigestValue>
+<DigestValue>vuHaxeAxUV8j49q9Z208B26ZPbE=</DigestValue>
 </Reference>
 </SignedInfo>
-<SignatureValue>ecPcTTksRoBZJoP1r+wUySpkzaE02AMNombPPvHbYJAdl6Jv8Iie8Ouiyt1rXIj+
-VcDyIOr2aJUWncGRaOoCKNedwiUIqpdYc49Htdw6Z4UkYN5F9ERfL3c0LHJQHNcM
-mMhgjbYsLSEsfyaldxlRkFpeN754hOL2B5B8K16WbjqC+onkCr0lMPMWICTwjB2k
-p99RKO9ufPMAi1vazrcGaqQ0PtHqNQiXtmwL58Pj4lQUys365DDfF5Y6KYzeK0Nw
-x0hq/BJhTGeIE6VjgHsIIH+hAClBiABQGO6GTCw1w1GtxtKICG9+9xPIOikcHP1I
-VzVK4BtyWX8WKkoJV159lsPuwXlLja6E+YkRtBZ3HWBDSWoFvvc94IovOM3bJbWO
-G7y+Oy4ylKMVdGoG94+MBgTRe2r7xCOwk5kcLVBOYjrOxuImko463bmbJlakPGNx
-byf9CnKg9M+WXVOXL8MUPzLeIvh/9mtXkxzsY5c8NVpEQ4S15IM5JkqsLYZmpkS8
-nmYDe8E9aKQoKR/eedPhxrDfJkpq6zMf9/6bjKvc6CvhOdhXnrEBJdyEDePhhhO+
-r1l4WKPtYijAztPX3iMebqfR0mJkolVFldJBXc/xW0fY191K7naqxRwGJuMQ8MV6
-6om7P683g0KkUlBPrTu5wtS631LuMkUWwXBBp7+f3rs=</SignatureValue>
+<SignatureValue>i+9tPxhHmz9lc1RMLNHLwJS0M9Sl5VVDzd+vE1wOCVs5AhGhoEUqMFm2kShHcbsD
+SBzFX7wfyGMaM/lSo25CvHFk5Wyu5Pu7SCeLAhuYjywMe/a2GVhaefpCNIKsOyOy
+tTJyRZvMCdfElnp0mUT3Q/iJ7Mgf9Y5tec6TJcQZVC5APhQiWPSkUb6hTpQmETBm
+adX6VuLPmGuzjP29IElmxcw+4r2y6QMApF+hSpuEt61kH8fvXCCqZEyIBhrVAj0f
+O5kRsaGUVjk9fRnNjrjIGpGiorH+faJ8uAwe8vApu3izEI3cbT+hvzJ9cATBrq7F
+IIpJPxMbqrwqXs6ORfDf+hBHtOgEe22Li/XcGfSxNXg/4I2pGdxEwpRxnR30YowF
+sr0cG3YnM7YQC2G2DJ7VZNdYUvo1rjOuYwmeGwD7uqRdN/XZSz2X/XI6+213Z74w
+jQSRqBLEJTQdtkkywz0XYFQ05T8lFCnkJtz017peZA5lcQB9/cBmIKSebf7CozUe
+LCKCxzvA+eOSHqQd+5yZVcBn3nxJZMLZpW6GzILokFmtQDW/QNEZ235BkfX4h8gY
+Ww1nZeAZBRTc2giSu/2LE3WvyP3enwYEDi/zoegk0zXtG8Dj5FScOMKTM0zR0v/K
+c2bTK7t6k+EIAodwLJbkz5DzmSpOlQ8UJk3f/7pxqz8=</SignatureValue>
 <KeyInfo>
-<wsse:SecurityTokenReference><wsse:Reference ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" URI="#id-12c8235e-f647-48e2-8944-19e35d7efa51"/></wsse:SecurityTokenReference></KeyInfo>
-</Signature>
-      <wsse:BinarySecurityToken xmlns:ns1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" ns1:Id="id-12c8235e-f647-48e2-8944-19e35d7efa51">MIIFFTCCAv2gAwIBAgIUevTn/d/XbTqbj0M6Q93+sRYx3pgwDQYJKoZIhvcNAQEL
+<wsse:SecurityTokenReference><X509Data>
+<X509IssuerSerial>
+<X509IssuerName>CN=*.crediscore.co</X509IssuerName>
+<X509SerialNumber>701958465195975363928029716549400644846424809112</X509SerialNumber>
+</X509IssuerSerial>
+<X509Certificate>MIIFFTCCAv2gAwIBAgIUevTn/d/XbTqbj0M6Q93+sRYx3pgwDQYJKoZIhvcNAQEL
 BQAwGjEYMBYGA1UEAwwPKi5jcmVkaXNjb3JlLmNvMB4XDTIyMDUxODE1NTAzMFoX
 DTIzMDUxODE1NTAzMFowGjEYMBYGA1UEAwwPKi5jcmVkaXNjb3JlLmNvMIICIjAN
 BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzcXCy8j6k16n9z+LLl1Yyu8MwxCj
@@ -61,22 +64,24 @@ He5alf6uiyeOBmUOXBiitx4Nou6LrPNjFFc3dwXMJZ3Lh8SN80Pf6N7H3mpQFqrj
 HrVDcUrOR3cDjObs6dTDv8pGjyNZ0KWstkcNQFEMKaz1fnf1Llu0WUZ8gyYwTi0A
 DbyBLFzqT1u6gbmgVcW5hDy7RRHVYNyoUWH8vmbIqsveLkwHo1aqQemjZ8EUyjcx
 KEZr7bZO6OzU9/ar1YMErsHd+kM+s3EmCNOtXsiyaxtnhuQBp4iRbw4aXFTsRr//
-s7Wv+dyRKX3i</wsse:BinarySecurityToken>
-      <wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-827a9ca0-0ecd-4961-9b6f-39b90195eff1">
-        <wsu:Created>2022-12-11T09:22:12Z</wsu:Created>
-        <wsu:Expires>2022-12-11T12:22:12Z</wsu:Expires>
+s7Wv+dyRKX3i</X509Certificate>
+</X509Data>
+</wsse:SecurityTokenReference></KeyInfo>
+</Signature>
+      <wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-713e3f14-7b62-451f-8cc8-3798a81d8553">        <wsu:Created>2022-12-11T18:27:12Z</wsu:Created>
+        <wsu:Expires>2022-12-11T21:27:12Z</wsu:Expires>
       </wsu:Timestamp>
     </wsse:Security>
   </soap-env:Header>
-  <soap-env:Body xmlns:ns0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" ns0:Id="id-154efc16-b13f-4fa1-9597-f10dfed651cd">
-    <consultaXml>
+  <soap-env:Body xmlns:ns0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" ns0:Id="id-4db28775-f20a-4e2b-82f0-55d8d40ee1f7">    
+    <inf:consultaXml>
       <parametrosConsulta>
         <codigoInformacion>1855</codigoInformacion>
         <motivoConsulta>24</motivoConsulta>
         <numeroIdentificacion>37685317</numeroIdentificacion>
-        <primerApellido xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
-        <tipoIdentificacion>1</tipoIdentificacion>
+        <primerApellido>1</primerApellido>
+        <tipoIdentificacion xsi:nil="true"/>
       </parametrosConsulta>
-    </consultaXml>
+    </inf:consultaXml>
   </soap-env:Body>
 </soap-env:Envelope>
