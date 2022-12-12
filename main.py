@@ -13,11 +13,11 @@ from zeep.wsse.utils import WSU
 from zeep.wsse.signature import Signature
 
 wsdl_url = 'https://miportafoliouat.transunion.co/InformacionComercialWS/services/InformacionComercial?wsdl'
-user = "520825"
-password = "COHd6zaIf*08"
+user = "***"
+password = "****"
 
 pfx_cert = 'certificate.pfx'
-pfx_password = 'namtrik'
+pfx_password = '****'
 
 class SignatureTimestamp(Signature):
     
