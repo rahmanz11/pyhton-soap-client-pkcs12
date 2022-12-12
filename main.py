@@ -13,7 +13,6 @@ from zeep.wsse import utils
 from datetime import datetime, timedelta
 from zeep.wsse.utils import WSU
 from zeep.wsse.signature import Signature
-import shutil
 
 wsdl_url = 'InformacionComercialWS.wsdl' #https://miportafoliouat.transunion.co/InformacionComercialWS/services/InformacionComercial?wsdl
 user = "520825"
@@ -71,7 +70,7 @@ with open(pfx_cert, "rb") as f:
                                           format=PrivateFormat.TraditionalOpenSSL,
                                           encryption_algorithm=NoEncryption()))
         f.close()
-
+    
     signature = SignatureTimestamp(pk, cert, pfx_password)
     settings = Settings(strict=False, xml_huge_tree=True)
     client = Client(wsdl_url, transport=transport, wsse=signature, plugins=[history], settings=settings)    
@@ -81,39 +80,12 @@ with open(pfx_cert, "rb") as f:
     client.set_ns_prefix("xsi", "http://www.w3.org/2001/XMLSchema-instance")
     client.set_ns_prefix('soapenc', 'http://schemas.xmlsoap.org/soap/encoding/')
 
-    # outer_type = client.get_type('dto:ParametrosConsultaDTO')
-    # outer_wrap = xsd.Element('parametrosConsulta', outer_type)
-        
-    # inner_type = client.get_type('soapenc:string')
-
-    # codigoInformacion_wrap = xsd.Element('codigoInformacion', inner_type)
-    # codigoInformacion_value = codigoInformacion_wrap('1855')
-    
-    # motivoConsulta_wrap = xsd.Element('motivoConsulta', inner_type)
-    # motivoConsulta_value = motivoConsulta_wrap('24')
-
-    # numeroIdentificacion_wrap = xsd.Element('numeroIdentificacion', inner_type)
-    # numeroIdentificacion_value = numeroIdentificacion_wrap('37685317')
-
-    # outer_value = outer_wrap(codigoInformacion_value, motivoConsulta_value, numeroIdentificacion_value)
-
-    str_element = client.get_element("soapenc:string")
-    codigoInformacion = xsd.AnyObject(str_element, "1855")
-
-    request_data = {
-        'codigoInformacion': codigoInformacion.value,
-        'motivoConsulta': '24',
-        'numeroIdentificacion': '37685317',
-        'tipoIdentificacion': '1'
-    }
-
-    request_parameter = {
-        'parametrosConsulta': request_data
-    }
+    dto_factory = client.type_factory('dto')
+    parameters = dto_factory.ParametrosConsultaDTO(codigoInformacion='1855', motivoConsulta='24', numeroIdentificacion='37685317', tipoIdentificacion='1')
 
     with client.settings(raw_response=True): 
-        response = client.service.consultaXml(**request_parameter)
+        response = client.service.consultaXml(parametrosConsulta = parameters)
     print (response.text)
 
     for hist in [history.last_sent, history.last_received]:
-        print(etree.tostring(hist["envelope"], encoding="unicode", pretty_print=True))
+        print(etree.tostring(hist["envelope"], encoding="unicode", pretty_print=False))

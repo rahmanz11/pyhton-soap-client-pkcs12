@@ -3,8 +3,72 @@ import requests
 url="https://miportafoliouat.transunion.co/InformacionComercialWS/services/InformacionComercial?wsdl"
 # headers = {'content-type': 'application/soap+xml', 'Authorization': 'Basic NTIwODI1OkNPSGQ2emFJZiowOA=='}
 headers = {'SOAPAction': '""', 'Content-Type': 'text/xml; charset=utf-8', 'Authorization': 'Basic NTIwODI1OkNPSGQ2emFJZiowOA=='}
-#body="""<soapenv:Envelope xmlns:inf="http://infocomercial.cifin.asobancaria.com" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Header><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><wsu:Timestamp wsu:Id="TS-609AF1C618CA2F7BB8167078537110430"><wsu:Created>2022-12-12T19:02:51.104Z</wsu:Created><wsu:Expires>2022-12-12T21:49:31.104Z</wsu:Expires></wsu:Timestamp><ds:Signature Id="SIG-609AF1C618CA2F7BB8167078537108329" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"><ec:InclusiveNamespaces PrefixList="inf soapenv xsd xsi" xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:CanonicalizationMethod><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><ds:Reference URI="#id-609AF1C618CA2F7BB8167078537108028"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"><ec:InclusiveNamespaces PrefixList="inf xsd xsi" xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>+oZeU0kFIeM1+5soP3FosV1JVYI=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>FIytC3diPmJSOVus4W7IR7FEbW/RumJhMlAc/idwoSeypO5+w6+0z7h/gmqgTQ0KZTsYEupN7uxsjKMNSg4oRlpO7kn/kpLm0i6Qizzgefj8W/VJK+cZvxC7wUnNoIbFuQBdxBPaWUishjgpKc/WS8ofA4QkrnoWG3QtLDmvlPZF02autSSdOQivtrqblKFyhPPFGpouF69YyuthtTvav1nkicj5ne7q5qeRKr4ioDA2OyNcHw8LPEXLAvf4tN4j95O45J3rTCGRwCVvBsO/d7/+hG6r//zuH8fL6Fk2U7oaNnNs+FVjOi8u2tiIdayVRyrR/jiMBx7ownfJEZ6fswTy+rfs/YelZ+ecm0eNdwgEBlT1HxbQMJ+fvvaJDsO35qs7UOh/ip/y8ssmQ2Kydv69A56kIdBPxdAA3LcWD4mFK7VoumiTYaFvlulTlwDFx97mqY+GQpmNH5VDJnQf87CpHL8nuhYxi8SJEeUzwdFM0+FE9bUOnxfMKe0rOmRelyoEr2Re/E15bxoDiV4EuiJimymo4gOCPk7ZuVxp9/oYP/8X/MvSN14nyJny3TqJ2dRW7BfJt/R6BX9EIaVvb/2tKVsUya0or2zATMmwpwNkYUPIfgP+RuPkLBEmU9Mx65JAIIROm6k1zIZxMTviq9RtyxIF4Kbv5h1mBYyyKfY=</ds:SignatureValue><ds:KeyInfo Id="KI-609AF1C618CA2F7BB8167078537108026"><wsse:SecurityTokenReference wsu:Id="STR-609AF1C618CA2F7BB8167078537108027"><ds:X509Data><ds:X509IssuerSerial><ds:X509IssuerName>CN=*.crediscore.co</ds:X509IssuerName><ds:X509SerialNumber>701958465195975363928029716549400644846424809112</ds:X509SerialNumber></ds:X509IssuerSerial></ds:X509Data></wsse:SecurityTokenReference></ds:KeyInfo></ds:Signature></wsse:Security></soapenv:Header><soapenv:Body wsu:Id="id-609AF1C618CA2F7BB8167078537108028" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><inf:consultaXml soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><in0 xsi:type="dto:ParametrosConsultaDTO" xmlns:dto="http://dto.infocomercial.cifin.asobancaria.com"><codigoInformacion xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">1855</codigoInformacion><motivoConsulta xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">24</motivoConsulta><numeroIdentificacion xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">37685317</numeroIdentificacion><tipoIdentificacion xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">1</tipoIdentificacion></in0></inf:consultaXml></soapenv:Body></soapenv:Envelope>"""
-
-body = """<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inf="http://infocomercial.cifin.asobancaria.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dto="http://dto.infocomercial.cifin.asobancaria.com" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"><soap-env:Header><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#id-b42fce73-d4bb-48ba-b463-d6de1cedc750"><Transforms><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>4O2INJWYurZJOpEMBCG/ITO9OjQ=</DigestValue></Reference><Reference URI="#id-3e953ee7-417d-4810-8707-7563b0b8cef9"><Transforms><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>l9vMAilNcsNuttq+cNJrW9kRbEE=</DigestValue></Reference></SignedInfo><SignatureValue>N/bSqQOeTY6TvoGK27cPqAtM0mFz/1rkfNnDx9gZyKTv5Ska65J6vB4vwbBD0utGSFkseq1Nv4+H3LSwT5eCNb9pxmAVrtnYzKEdEZSl/5Xi0mtAD+Wmn5NUHUG7ZPXIxpgKJbfnqk0kNJ1uIpBn5Crjc1IyZkhkEncxE9yt9HSCFx1hZdoZVROvOmESo7lm4i8UxFWIeheIRM7tPfxOgC31y2BJkIANenVXvuHTwAI1nCGx192sL6WfMJpvgYNLFonoVQe2t9vVNBEHxiueDFK39fY5t7QPEPuAD76HpPDYMNx/VQzPWc+sBqZKOTP304o/gszMWm68L8ZkcMpOaK8RJN3GFG5CMl6CEpV+WGtsSnhkJHKgaRGdGunh4JkeXElo9wj1Zseb+GJf98TcWT2K5iVon8u8Pf0tdjls5pjkDY8j6jHCqpgwUe4NmacVuyLobU3qxR+Z6KSV4LGfMnJ15ko4KNn3ore8pv4Jc7nCBnxEC+TNPPQuBWwoxlJofYYixQtnKEwRorWR6G7aSsVKVWXizknS+w2gzWbwU0o1VC+ky9AnroSrqA/P+ApPXrChn8/wgJD6Gpm+susAvyI3vxdUVncXRXDswtF83ewVSx3FepAbHEBurqCG71VDnDvd1HsKwNNzEdiHKKKhpaDcU1DBWNduymwVTDzFMQQ=</SignatureValue><KeyInfo><wsse:SecurityTokenReference><X509Data><X509IssuerSerial><X509IssuerName>CN=*.crediscore.co</X509IssuerName><X509SerialNumber>701958465195975363928029716549400644846424809112</X509SerialNumber></X509IssuerSerial><X509Certificate>MIIFFTCCAv2gAwIBAgIUevTn/d/XbTqbj0M6Q93+sRYx3pgwDQYJKoZIhvcNAQELBQAwGjEYMBYGA1UEAwwPKi5jcmVkaXNjb3JlLmNvMB4XDTIyMDUxODE1NTAzMFoXDTIzMDUxODE1NTAzMFowGjEYMBYGA1UEAwwPKi5jcmVkaXNjb3JlLmNvMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzcXCy8j6k16n9z+LLl1Yyu8MwxCjDuOrWES37HVyuXiD53uEZaOXQFevx+MxWwM409+cfhZdiCdXTxa6wLkGSVvEORym3W14a8/kmbV968/RTNVqQ1J7lgz6nh/wjDS9VDgKyJtYUex0BHmOX0hIXw9FUwpXNKlxcvdr29CRvrbOX1lInFPhuQdHz8H5xxDpqPBWGuPret3K8x4q1apMgINmrqDdMaBaTqV0mKIIyuPrC1APIpkhzZR/Vvn3NWvjm+NFp6GNx5BdT8XS88lAHO/KqqjilCVR2lLKCZ7pJsD8fJnEU50+a9yKc2uD6yC9rQlL31JSX14xCmPBy7JXCrDnBvxDZ2OOHl2AMa6vMgKnxI+w4WFlDQNc6dL7joRH8UXQSQL6euV8vsh8rp4xmuJAR8IndYoOv+XJm79PqqMHXQF18Ws51Tl7WhAtwkqnblxNCRTZ2sdbyq75t8cVo5e61glqsxS3DZnP0Ir4h696AtNQIJJSWskJv+ded/kMVgaL1vECPiPnW/Xf9JFEOeWjUYJed+G+9DG4hUGYjbkmeuFGry+KQbU3u4XRzq62glLRC1SB4UQy8DKJLECPmaXQwfQyjVjfXHJf5Y4BXv6Bu2fs4vx//aCrMQzt+BLrq57RZgtvNzP/0VvIWlHVtOzoG6ZUF7fghBlhD/Q+dv0CAwEAAaNTMFEwHQYDVR0OBBYEFCmqokNlUI6Av/54p1MCIC8nfdDPMB8GA1UdIwQYMBaAFCmqokNlUI6Av/54p1MCIC8nfdDPMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBAAmvik7/83QNuvT7t9Rik+WltBa//5BE8jcEEMnehVI5/lbQE2hn34OZ2OtBJxXEWJ6aa71cJo43IDJ0o5uv9i1tBO40mZNjJKunJg19/2q4szJuXuCs4vRSmS6nV20s/MM8dv4bHSJdSmxeEsU7NTsWNtQOgXlQWWCz1m+b6OzzxJTwOQLbizMosvAjCRdt1MSGhU8UPXpZeQRHRLdHs8WaSk0j/fzaqqiOx7xN2/1aeZ+gnfa1CPCTq6DYCNyrInPzaDR3sV4f96VDTkZLBWFgCyL7IDJwyI2bhuiUCWRBMXhIwtxPr1BXUZ+RHaSJkhBxSSLjRY5AXf7e0PIYs9gIjVmC4DJVdd0KrJpTEFTs9e8o2B+m+z4n8uLFnafefZMyzcfRaQxJGoIF8dJpL2lT//1XOiD3He5alf6uiyeOBmUOXBiitx4Nou6LrPNjFFc3dwXMJZ3Lh8SN80Pf6N7H3mpQFqrjHrVDcUrOR3cDjObs6dTDv8pGjyNZ0KWstkcNQFEMKaz1fnf1Llu0WUZ8gyYwTi0ADbyBLFzqT1u6gbmgVcW5hDy7RRHVYNyoUWH8vmbIqsveLkwHo1aqQemjZ8EUyjcxKEZr7bZO6OzU9/ar1YMErsHd+kM+s3EmCNOtXsiyaxtnhuQBp4iRbw4aXFTsRr//s7Wv+dyRKX3i</X509Certificate></X509Data></wsse:SecurityTokenReference></KeyInfo></Signature><wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-3e953ee7-417d-4810-8707-7563b0b8cef9">        <wsu:Created>2022-12-11T19:38:41Z</wsu:Created><wsu:Expires>2022-12-11T22:38:41Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap-env:Header><soap-env:Body xmlns:ns0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" ns0:Id="id-b42fce73-d4bb-48ba-b463-d6de1cedc750">    <inf:consultaXml><parametrosConsulta><codigoInformacion>1856</codigoInformacion><motivoConsulta>24</motivoConsulta><numeroIdentificacion>37685317</numeroIdentificacion><primerApellido>1</primerApellido><tipoIdentificacion></tipoIdentificacion></parametrosConsulta></inf:consultaXml></soap-env:Body></soap-env:Envelope>"""
+body = """<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inf="http://infocomercial.cifin.asobancaria.com" xmlns:dto="http://dto.infocomercial.cifin.asobancaria.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"><soap-env:Header><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"><wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-92c199c6-91d1-44d4-b826-3b82f1d2bd94"><wsu:Created>2022-12-12T09:38:28Z</wsu:Created><wsu:Expires>2022-12-12T12:38:28Z</wsu:Expires></wsu:Timestamp><Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#id-5fb538df-379e-4782-b20f-14d5a226ad1d">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>fthWis8BL3RgWE59gER3AHoe9Yo=</DigestValue>
+</Reference>
+<Reference URI="#id-92c199c6-91d1-44d4-b826-3b82f1d2bd94">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>JZ0vr+dHh+Mr0B7QSz7vtAoi1FA=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>hBXdgDFiH/8UIQTYgltypy+avH6W8/7T5dR3U1jqj3gN6pKXgfO7HjWAxhi4yuvc
+fSLr+8rtbOczce5+R8A2khMpo7JvG/BXh4zyFhyDUTVNR0CWhClK9F3aMh/xQ3RR
+d+JCPjtWHgCIVGBfR147yAatBHuLDxuoTcjItt2fB/nKff6yFXEZ0eXUzh5JGZ4o
+Xm0Z1MT7j5MM1S+ufj1czias7E9+gWB4IqCJ0z1C9BLExDgeiZjI5MSTqgVYKzbF
+cXcmueRzEbyDzHnx6jSKG7OnIwn2dt9fk4H7gJVYU/U9a8pMbYG4V1swFNrv56hM
+dQNX7RL8ECRdGFMUGOzBrMgfJdSMhPpuTVLmDEOEuZXTa0a0N5ln2m5pJdUL5CCW
+StQL37iENIq4qK+ebFcpq9k9mCkOFjWVqcRFHrhcv3jyEukO2UNlpDeNHb3OA+2w
+RqyWSynHryr9Pf1kWxANxurw8biTE5kdFRHBGPExvzX2IsrxVyw2qtKvyvhxZgTg
+Ssv2nH4nFBzrmTn+b8YOkLwDdrRXvCPmXsJwT08NlNiBk1D3QfA9IfsUxJfg64Kk
+DND5WwTH2lBRr9It31OCF7rQnRJ0Uf98sA0+MbgS20WUI26+oMaaUw2vH2EipBdJ
+A4CzKf1v2wxyJ3D++CgybsoxMjzoiwJHk/aRtb+Dqk0=</SignatureValue>
+<KeyInfo>
+<wsse:SecurityTokenReference><X509Data>
+<X509IssuerSerial>
+<X509IssuerName>CN=*.crediscore.co</X509IssuerName>
+<X509SerialNumber>701958465195975363928029716549400644846424809112</X509SerialNumber>
+</X509IssuerSerial>
+<X509Certificate>MIIFFTCCAv2gAwIBAgIUevTn/d/XbTqbj0M6Q93+sRYx3pgwDQYJKoZIhvcNAQEL
+BQAwGjEYMBYGA1UEAwwPKi5jcmVkaXNjb3JlLmNvMB4XDTIyMDUxODE1NTAzMFoX
+DTIzMDUxODE1NTAzMFowGjEYMBYGA1UEAwwPKi5jcmVkaXNjb3JlLmNvMIICIjAN
+BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzcXCy8j6k16n9z+LLl1Yyu8MwxCj
+DuOrWES37HVyuXiD53uEZaOXQFevx+MxWwM409+cfhZdiCdXTxa6wLkGSVvEORym
+3W14a8/kmbV968/RTNVqQ1J7lgz6nh/wjDS9VDgKyJtYUex0BHmOX0hIXw9FUwpX
+NKlxcvdr29CRvrbOX1lInFPhuQdHz8H5xxDpqPBWGuPret3K8x4q1apMgINmrqDd
+MaBaTqV0mKIIyuPrC1APIpkhzZR/Vvn3NWvjm+NFp6GNx5BdT8XS88lAHO/Kqqji
+lCVR2lLKCZ7pJsD8fJnEU50+a9yKc2uD6yC9rQlL31JSX14xCmPBy7JXCrDnBvxD
+Z2OOHl2AMa6vMgKnxI+w4WFlDQNc6dL7joRH8UXQSQL6euV8vsh8rp4xmuJAR8In
+dYoOv+XJm79PqqMHXQF18Ws51Tl7WhAtwkqnblxNCRTZ2sdbyq75t8cVo5e61glq
+sxS3DZnP0Ir4h696AtNQIJJSWskJv+ded/kMVgaL1vECPiPnW/Xf9JFEOeWjUYJe
+d+G+9DG4hUGYjbkmeuFGry+KQbU3u4XRzq62glLRC1SB4UQy8DKJLECPmaXQwfQy
+jVjfXHJf5Y4BXv6Bu2fs4vx//aCrMQzt+BLrq57RZgtvNzP/0VvIWlHVtOzoG6ZU
+F7fghBlhD/Q+dv0CAwEAAaNTMFEwHQYDVR0OBBYEFCmqokNlUI6Av/54p1MCIC8n
+fdDPMB8GA1UdIwQYMBaAFCmqokNlUI6Av/54p1MCIC8nfdDPMA8GA1UdEwEB/wQF
+MAMBAf8wDQYJKoZIhvcNAQELBQADggIBAAmvik7/83QNuvT7t9Rik+WltBa//5BE
+8jcEEMnehVI5/lbQE2hn34OZ2OtBJxXEWJ6aa71cJo43IDJ0o5uv9i1tBO40mZNj
+JKunJg19/2q4szJuXuCs4vRSmS6nV20s/MM8dv4bHSJdSmxeEsU7NTsWNtQOgXlQ
+WWCz1m+b6OzzxJTwOQLbizMosvAjCRdt1MSGhU8UPXpZeQRHRLdHs8WaSk0j/fza
+qqiOx7xN2/1aeZ+gnfa1CPCTq6DYCNyrInPzaDR3sV4f96VDTkZLBWFgCyL7IDJw
+yI2bhuiUCWRBMXhIwtxPr1BXUZ+RHaSJkhBxSSLjRY5AXf7e0PIYs9gIjVmC4DJV
+dd0KrJpTEFTs9e8o2B+m+z4n8uLFnafefZMyzcfRaQxJGoIF8dJpL2lT//1XOiD3
+He5alf6uiyeOBmUOXBiitx4Nou6LrPNjFFc3dwXMJZ3Lh8SN80Pf6N7H3mpQFqrj
+HrVDcUrOR3cDjObs6dTDv8pGjyNZ0KWstkcNQFEMKaz1fnf1Llu0WUZ8gyYwTi0A
+DbyBLFzqT1u6gbmgVcW5hDy7RRHVYNyoUWH8vmbIqsveLkwHo1aqQemjZ8EUyjcx
+KEZr7bZO6OzU9/ar1YMErsHd+kM+s3EmCNOtXsiyaxtnhuQBp4iRbw4aXFTsRr//
+s7Wv+dyRKX3i</X509Certificate>
+</X509Data>
+</wsse:SecurityTokenReference></KeyInfo>
+</Signature></wsse:Security></soap-env:Header><soap-env:Body xmlns:ns0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" ns0:Id="id-5fb538df-379e-4782-b20f-14d5a226ad1d"><inf:consultaXml><parametrosConsulta><codigoInformacion>1855</codigoInformacion><motivoConsulta>24</motivoConsulta><numeroIdentificacion>37685317</numeroIdentificacion><primerApellido xsi:nil="true"/><tipoIdentificacion>1</tipoIdentificacion></parametrosConsulta></inf:consultaXml></soap-env:Body></soap-env:Envelope>"""
 response = requests.post(url,data=body,headers=headers)
 print (response.content)
